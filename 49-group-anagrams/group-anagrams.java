@@ -3,13 +3,13 @@ class Solution {
         HashMap<String, List<String>> map = new HashMap<>();
 
         for(int i = 0; i < strs.length; i++){
-            char[] freq = new char[26];
+            int[] freq = new int[26];
             for(char c: strs[i].toCharArray()){
                 freq[c-'a']++;
             }
             String key = "";
-            for(char ch: freq){
-                key += ch;
+            for(int j = 0; j < 26; j++){
+                key += "#" + freq[j];
             }
 
             if(!map.containsKey(key)){
