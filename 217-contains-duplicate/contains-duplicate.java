@@ -3,9 +3,11 @@ class Solution {
        HashSet<Integer> set = new HashSet<>();
 
        for(int n: nums){
-        set.add(n);
+        if(!set.add(n)){
+            return true;
+        }
        }
 
-       return set.size() != nums.length;
+       return false;
     }
 }
