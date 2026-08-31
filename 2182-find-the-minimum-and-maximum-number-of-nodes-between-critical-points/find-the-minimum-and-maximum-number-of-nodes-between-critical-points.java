@@ -10,33 +10,33 @@
  */
 class Solution {
     public int[] nodesBetweenCriticalPoints(ListNode head) {
-        ArrayList<Integer> list = new ArrayList<>();
+        ListNode prev = head;
+        ListNode curr = head.next;
 
-        ListNode node = head;
-        int count = 1;
-        while(node.next.next!=null){
-            if(node.next.val<node.val &&  node.next.val < node.next.next.val ){
-                list.add(count);
-            } 
-            if(node.next.val>node.val &&  node.next.val > node.next.next.val ){
-                list.add(count);
-            } 
-            node = node.next;
-            count++;
+        int first = -1;
+        int previous = -1;
+        int index = 1;
+        int minDis = Integer.MAX_VALUE;
+
+        while(curr!=null && curr.next!=null){
+            if((curr.val > prev.val && curr.val > curr.next.val) || 
+            (curr.val < prev.val && curr.val <  curr.next.val)){
+                if(first==-1){
+                    first = index;
+                } else{
+                    minDis = Math.min(minDis, index - previous);
+                }
+                previous = index;
+
+            }
+            prev = curr;
+            curr =curr.next;
+            index++;
         }
-        //System.out.println(list);
-        if(list.size()==0 || list.size()==1){
+
+        if(first == -1|| first ==previous){
             return new int[] {-1,-1};
         }
-
-        int min = Integer.MAX_VALUE;
-        int max =  list.get(list.size()-1)- list.get(0);
-
-        for(int i = 1; i < list.size(); i++){
-            min = Math.min(list.get(i)-list.get(i-1), min);
-        }
-
-        return new int[] {min,max};
-
+        return new int[] {minDis, previous - first};
     }
 }
