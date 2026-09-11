@@ -2,20 +2,32 @@ class Solution {
     public int totalNumbers(int[] digits) {
         int n = digits.length;
         int count = 0;
-        HashSet<Integer> set = new HashSet<>();
-        for(int i = 0; i < n; i++){
-            if (digits[i] == 0) continue;
-            for(int j = 0; j < n; j++){
-                if (j == i) continue;
-                for(int k = 0; k < n; k++){
-                    if (k == i || k == j) continue;
-                    if (digits[k] % 2 == 0){
-                        int number = digits[i] * 100 + digits[j] * 10 + digits[k]*1;
-                        set.add(number);
-                    }
-                }
-            }
+        int[] freq = new int[10];
+        for(int num : digits){
+            freq[num]++;
         }
-        return set.size();
+
+        for(int i = 1; i < 10; i++){
+            if(freq[i]==0) continue;
+            freq[i]--;
+            
+            for(int j = 0; j < 10; j++){
+                if(freq[j]==0) continue;
+                freq[j]--;
+
+                for(int k = 0; k <=8; k +=2){
+                    if(freq[k]==0) continue;
+                    freq[k]--;
+                    int num = i * 100 + j * 10 + k;
+                    if(num%2==0) count++;
+                    freq[k]++;
+
+                }
+                freq[j]++;
+            }
+            freq[i]++;
+        }
+
+        return count;
     }
 }
