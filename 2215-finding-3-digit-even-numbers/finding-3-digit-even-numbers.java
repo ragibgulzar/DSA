@@ -1,25 +1,37 @@
 class Solution {
     public int[] findEvenNumbers(int[] digits) {
+        List<Integer> result = new ArrayList<>();
         int n = digits.length;
-        HashSet<Integer> set = new HashSet<>();
-        for(int i = 0; i < n; i++){
-            if (digits[i] == 0) continue;
-            for(int j = 0; j < n; j++){
-                if(i==j) continue;
-                for(int k = 0; k < n; k++){
-                    if(k==i|| k==j) continue;
-                    if (digits[k] % 2 != 0) continue;
-                    int num = digits[i] * 100 + digits[j] * 10 + digits[k]*1;
-                    set.add(num); 
+        int[] freq = new int[10];
+        for(int num : digits){
+            freq[num]++;
+        }
+
+        for(int i = 1; i < 10; i++){
+            if(freq[i]==0) continue;
+            freq[i]--;
+            
+            for(int j = 0; j < 10; j++){
+                if(freq[j]==0) continue;
+                freq[j]--;
+
+                for(int k = 0; k <=8; k +=2){
+                    if(freq[k]==0) continue;
+                    freq[k]--;
+                    int num = i * 100 + j * 10 + k;
+                    result.add(num);
+                    freq[k]++;
+
                 }
+                freq[j]++;
             }
+            freq[i]++;
         }
-        ArrayList<Integer> list = new ArrayList<>(set);
-        Collections.sort(list);
-        int[] ans = new int[list.size()];
-        for(int i = 0; i < list.size(); i++){
-            ans[i] = list.get(i);
+        int[] resArr = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            resArr[i] = result.get(i);
         }
-        return ans;
+
+        return resArr;
     }
 }
