@@ -11,15 +11,22 @@
  */
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-        HashSet<ListNode> map = new HashSet<>();
+        ListNode slow = head;
+        ListNode fast = head;
 
-        ListNode temp = head;
-        while(temp!=null){
-            if(!map.add(temp)){
-                return temp;
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if(slow==fast){
+                slow = head;
+                while(fast != slow){
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
             }
-            temp = temp.next;
         }
-        return temp;
+        return null;
     }
 }
