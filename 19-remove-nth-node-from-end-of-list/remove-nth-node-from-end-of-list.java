@@ -21,10 +21,7 @@ class Solution {
             slow = slow.next;
             fast = fast.next;
         }
-        if(slow == dummy){
-            return head.next;
-        }
         slow.next = slow.next.next;
-        return head;
+        return dummy.next;
     }
 }
