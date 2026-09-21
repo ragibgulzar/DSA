@@ -7,28 +7,33 @@ class MyQueue {
     }
     
     public void push(int x) {
-        while (!output.isEmpty()) {
-            input.push(output.pop());
-        }
-
         input.push(x);
-
-        while (!input.isEmpty()) {
-            output.push(input.pop());
-        }
-        
     }
     
     public int pop() {
-        return output.pop();
+        while(!input.isEmpty()){
+            output.push(input.pop());
+        }
+        int val = output.pop();
+        while(!output.isEmpty()){
+            input.push(output.pop());
+        }
+        return val;
     }
     
     public int peek() {
-        return output.peek();
+        while(!input.isEmpty()){
+            output.push(input.pop());
+        }
+        int val = output.peek();
+        while(!output.isEmpty()){
+            input.push(output.pop());
+        }
+        return val;
     }
     
     public boolean empty() {
-        return output.isEmpty();
+        return input.isEmpty();
     }
 }
 
